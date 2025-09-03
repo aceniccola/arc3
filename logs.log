@@ -1,0 +1,120 @@
+2025-09-03 10:01:56,398 | INFO | Game list: ['ls20-fa137e247ce6']
+2025-09-03 10:01:56,557 | INFO | created new recording for ls20-fa137e247ce6.random.80 into recordings/ls20-fa137e247ce6.random.80.0df895d7-e709-4091-89a3-a520482d6f4e.recording.jsonl
+2025-09-03 10:01:56,885 | INFO | ls20-fa137e247ce6 - RESET: count 0, score 0, avg fps 0.0)
+2025-09-03 10:01:57,122 | INFO | ls20-fa137e247ce6 - ACTION7: count 1, score 0, avg fps 1.79)
+2025-09-03 10:01:57,341 | INFO | ls20-fa137e247ce6 - ACTION4: count 2, score 0, avg fps 2.56)
+2025-09-03 10:01:57,554 | INFO | ls20-fa137e247ce6 - ACTION7: count 3, score 0, avg fps 3.03)
+2025-09-03 10:01:57,777 | INFO | ls20-fa137e247ce6 - ACTION6: count 4, score 0, avg fps 3.31)
+2025-09-03 10:01:57,880 | INFO | ls20-fa137e247ce6 - ACTION3: count 5, score 0, avg fps 3.79)
+2025-09-03 10:01:58,100 | INFO | ls20-fa137e247ce6 - ACTION7: count 6, score 0, avg fps 3.9)
+2025-09-03 10:01:58,319 | INFO | ls20-fa137e247ce6 - ACTION7: count 7, score 0, avg fps 3.98)
+2025-09-03 10:01:58,539 | INFO | ls20-fa137e247ce6 - ACTION6: count 8, score 0, avg fps 4.04)
+2025-09-03 10:01:58,753 | INFO | ls20-fa137e247ce6 - ACTION7: count 9, score 0, avg fps 4.11)
+2025-09-03 10:01:58,969 | INFO | ls20-fa137e247ce6 - ACTION5: count 10, score 0, avg fps 4.15)
+2025-09-03 10:01:59,192 | INFO | ls20-fa137e247ce6 - ACTION4: count 11, score 0, avg fps 4.18)
+2025-09-03 10:01:59,289 | INFO | ls20-fa137e247ce6 - ACTION5: count 12, score 0, avg fps 4.4)
+2025-09-03 10:01:59,510 | INFO | ls20-fa137e247ce6 - ACTION2: count 13, score 0, avg fps 4.41)
+2025-09-03 10:01:59,607 | INFO | ls20-fa137e247ce6 - ACTION1: count 14, score 0, avg fps 4.61)
+2025-09-03 10:01:59,834 | INFO | ls20-fa137e247ce6 - ACTION6: count 15, score 0, avg fps 4.59)
+2025-09-03 10:01:59,934 | INFO | ls20-fa137e247ce6 - ACTION7: count 16, score 0, avg fps 4.75)
+2025-09-03 10:02:00,160 | INFO | ls20-fa137e247ce6 - ACTION7: count 17, score 0, avg fps 4.72)
+2025-09-03 10:02:00,388 | INFO | ls20-fa137e247ce6 - ACTION3: count 18, score 0, avg fps 4.7)
+2025-09-03 10:02:00,486 | INFO | ls20-fa137e247ce6 - ACTION7: count 19, score 0, avg fps 4.85)
+2025-09-03 10:02:00,712 | INFO | ls20-fa137e247ce6 - ACTION4: count 20, score 0, avg fps 4.82)
+2025-09-03 10:02:00,814 | INFO | ls20-fa137e247ce6 - ACTION2: count 21, score 0, avg fps 4.94)
+2025-09-03 10:02:00,920 | INFO | ls20-fa137e247ce6 - ACTION1: count 22, score 0, avg fps 5.05)
+2025-09-03 10:02:01,150 | INFO | ls20-fa137e247ce6 - ACTION3: count 23, score 0, avg fps 5.01)
+2025-09-03 10:02:01,255 | INFO | ls20-fa137e247ce6 - ACTION1: count 24, score 0, avg fps 5.12)
+2025-09-03 10:02:01,498 | INFO | ls20-fa137e247ce6 - ACTION5: count 25, score 0, avg fps 5.07)
+2025-09-03 10:02:01,642 | INFO | ls20-fa137e247ce6 - ACTION2: count 26, score 0, avg fps 5.12)
+2025-09-03 10:02:01,754 | INFO | ls20-fa137e247ce6 - ACTION7: count 27, score 0, avg fps 5.2)
+2025-09-03 10:02:01,989 | INFO | ls20-fa137e247ce6 - ACTION7: count 28, score 0, avg fps 5.16)
+2025-09-03 10:02:02,222 | INFO | ls20-fa137e247ce6 - ACTION7: count 29, score 0, avg fps 5.12)
+2025-09-03 10:02:02,335 | INFO | ls20-fa137e247ce6 - ACTION3: count 30, score 0, avg fps 5.2)
+2025-09-03 10:02:02,727 | INFO | ls20-fa137e247ce6 - ACTION5: count 31, score 0, avg fps 5.03)
+2025-09-03 10:02:02,853 | INFO | ls20-fa137e247ce6 - ACTION7: count 32, score 0, avg fps 5.09)
+2025-09-03 10:02:03,077 | INFO | ls20-fa137e247ce6 - ACTION7: count 33, score 0, avg fps 5.07)
+2025-09-03 10:02:03,185 | INFO | ls20-fa137e247ce6 - ACTION1: count 34, score 0, avg fps 5.14)
+2025-09-03 10:02:03,474 | INFO | ls20-fa137e247ce6 - ACTION3: count 35, score 0, avg fps 5.07)
+2025-09-03 10:02:03,576 | INFO | ls20-fa137e247ce6 - ACTION4: count 36, score 0, avg fps 5.14)
+2025-09-03 10:02:03,799 | INFO | ls20-fa137e247ce6 - ACTION6: count 37, score 0, avg fps 5.11)
+2025-09-03 10:02:04,086 | INFO | ls20-fa137e247ce6 - ACTION2: count 38, score 0, avg fps 5.05)
+2025-09-03 10:02:04,196 | INFO | ls20-fa137e247ce6 - ACTION3: count 39, score 0, avg fps 5.11)
+2025-09-03 10:02:04,484 | INFO | ls20-fa137e247ce6 - ACTION3: count 40, score 0, avg fps 5.05)
+2025-09-03 10:02:04,769 | INFO | ls20-fa137e247ce6 - ACTION2: count 41, score 0, avg fps 4.99)
+2025-09-03 10:02:05,047 | INFO | ls20-fa137e247ce6 - ACTION4: count 42, score 0, avg fps 4.95)
+2025-09-03 10:02:05,266 | INFO | ls20-fa137e247ce6 - ACTION5: count 43, score 0, avg fps 4.94)
+2025-09-03 10:02:05,369 | INFO | ls20-fa137e247ce6 - ACTION1: count 44, score 0, avg fps 4.99)
+2025-09-03 10:02:05,473 | INFO | ls20-fa137e247ce6 - ACTION2: count 45, score 0, avg fps 5.05)
+2025-09-03 10:02:05,799 | INFO | ls20-fa137e247ce6 - ACTION5: count 46, score 0, avg fps 4.98)
+2025-09-03 10:02:05,904 | INFO | ls20-fa137e247ce6 - ACTION7: count 47, score 0, avg fps 5.03)
+2025-09-03 10:02:06,196 | INFO | ls20-fa137e247ce6 - ACTION2: count 48, score 0, avg fps 4.98)
+2025-09-03 10:02:06,297 | INFO | ls20-fa137e247ce6 - ACTION1: count 49, score 0, avg fps 5.04)
+2025-09-03 10:02:06,580 | INFO | ls20-fa137e247ce6 - ACTION5: count 50, score 0, avg fps 4.99)
+2025-09-03 10:02:06,824 | INFO | ls20-fa137e247ce6 - ACTION1: count 51, score 0, avg fps 4.97)
+2025-09-03 10:02:06,923 | INFO | ls20-fa137e247ce6 - ACTION4: count 52, score 0, avg fps 5.02)
+2025-09-03 10:02:07,141 | INFO | ls20-fa137e247ce6 - ACTION3: count 53, score 0, avg fps 5.01)
+2025-09-03 10:02:07,243 | INFO | ls20-fa137e247ce6 - ACTION3: count 54, score 0, avg fps 5.06)
+2025-09-03 10:02:07,532 | INFO | ls20-fa137e247ce6 - ACTION6: count 55, score 0, avg fps 5.01)
+2025-09-03 10:02:07,814 | INFO | ls20-fa137e247ce6 - ACTION2: count 56, score 0, avg fps 4.98)
+2025-09-03 10:02:07,927 | INFO | ls20-fa137e247ce6 - ACTION2: count 57, score 0, avg fps 5.02)
+2025-09-03 10:02:08,026 | INFO | ls20-fa137e247ce6 - ACTION5: count 58, score 0, avg fps 5.06)
+2025-09-03 10:02:08,129 | INFO | ls20-fa137e247ce6 - ACTION1: count 59, score 0, avg fps 5.1)
+2025-09-03 10:02:08,410 | INFO | ls20-fa137e247ce6 - ACTION6: count 60, score 0, avg fps 5.06)
+2025-09-03 10:02:08,507 | INFO | ls20-fa137e247ce6 - ACTION1: count 61, score 0, avg fps 5.11)
+2025-09-03 10:02:08,602 | INFO | ls20-fa137e247ce6 - ACTION5: count 62, score 0, avg fps 5.15)
+2025-09-03 10:02:08,697 | INFO | ls20-fa137e247ce6 - ACTION1: count 63, score 0, avg fps 5.19)
+2025-09-03 10:02:08,798 | INFO | ls20-fa137e247ce6 - ACTION7: count 64, score 0, avg fps 5.23)
+2025-09-03 10:02:08,899 | INFO | ls20-fa137e247ce6 - ACTION4: count 65, score 0, avg fps 5.27)
+2025-09-03 10:02:08,997 | INFO | ls20-fa137e247ce6 - ACTION4: count 66, score 0, avg fps 5.31)
+2025-09-03 10:02:09,102 | INFO | ls20-fa137e247ce6 - ACTION3: count 67, score 0, avg fps 5.34)
+2025-09-03 10:02:09,199 | INFO | ls20-fa137e247ce6 - ACTION2: count 68, score 0, avg fps 5.38)
+2025-09-03 10:02:09,303 | INFO | ls20-fa137e247ce6 - ACTION4: count 69, score 0, avg fps 5.42)
+2025-09-03 10:02:09,399 | INFO | ls20-fa137e247ce6 - ACTION4: count 70, score 0, avg fps 5.45)
+2025-09-03 10:02:09,496 | INFO | ls20-fa137e247ce6 - ACTION5: count 71, score 0, avg fps 5.49)
+2025-09-03 10:02:09,595 | INFO | ls20-fa137e247ce6 - ACTION1: count 72, score 0, avg fps 5.53)
+2025-09-03 10:02:09,697 | INFO | ls20-fa137e247ce6 - ACTION1: count 73, score 0, avg fps 5.56)
+2025-09-03 10:02:09,802 | INFO | ls20-fa137e247ce6 - ACTION4: count 74, score 0, avg fps 5.59)
+2025-09-03 10:02:09,898 | INFO | ls20-fa137e247ce6 - ACTION6: count 75, score 0, avg fps 5.62)
+2025-09-03 10:02:09,993 | INFO | ls20-fa137e247ce6 - ACTION7: count 76, score 0, avg fps 5.66)
+2025-09-03 10:02:10,091 | INFO | ls20-fa137e247ce6 - ACTION7: count 77, score 0, avg fps 5.69)
+2025-09-03 10:02:10,189 | INFO | ls20-fa137e247ce6 - ACTION7: count 78, score 0, avg fps 5.72)
+2025-09-03 10:02:10,301 | INFO | ls20-fa137e247ce6 - ACTION2: count 79, score 0, avg fps 5.75)
+2025-09-03 10:02:10,400 | INFO | ls20-fa137e247ce6 - ACTION1: count 80, score 0, avg fps 5.78)
+2025-09-03 10:02:10,494 | INFO | recording for ls20-fa137e247ce6.random.80 is available in recordings/ls20-fa137e247ce6.random.80.0df895d7-e709-4091-89a3-a520482d6f4e.recording.jsonl
+2025-09-03 10:02:10,494 | INFO | Exiting: agent reached MAX_ACTIONS of 80, took 13.93 seconds (5.81 average fps)
+2025-09-03 10:02:10,700 | INFO | --- FINAL SCORECARD REPORT ---
+2025-09-03 10:02:10,700 | INFO | {
+  "cards": {
+    "ls20-fa137e247ce6": {
+      "game_id": "ls20-fa137e247ce6",
+      "total_plays": 1,
+      "scores": [
+        0
+      ],
+      "states": [
+        "NOT_FINISHED"
+      ],
+      "actions": [
+        62
+      ],
+      "resets": [
+        0
+      ]
+    }
+  },
+  "source_url": null,
+  "tags": [
+    "agent",
+    "random"
+  ],
+  "opaque": null,
+  "card_id": "1ceb33f1-3c82-44a5-8cb8-dec9986542d2",
+  "api_key": "5b574f9c-484e-46a3-94be-7d292b50819a",
+  "won": 0,
+  "played": 1,
+  "total_actions": 62,
+  "score": 0
+}
+2025-09-03 10:02:10,701 | INFO | View your scorecard online: https://three.arcprize.org/scorecards/1ceb33f1-3c82-44a5-8cb8-dec9986542d2
+2025-09-03 10:02:10,702 | INFO | Received SIGINT, exiting...
