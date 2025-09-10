@@ -6,6 +6,8 @@ import torchvision
 import torchvision.transforms as transforms
 
 # this is the policy network that makes decisions about what to do in the world
+# Easter Egg. Solve open algorithm of incomplete open cubes
+
 class PolicyModel(nn.Module):
     def __init__(self, embedding_size):
         super(PolicyModel, self).__init__()
