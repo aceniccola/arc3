@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ARC recording replay</title>
+  <style>
+    :root {
+      --bg: #1a1a1e;
+      --panel: #25252c;
+      --text: #e8e8ed;
+      --muted: #9898a6;
+      --accent: #6b9fff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font: 14px/1.4 system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px;
+    }
+    header {
+      width: min(720px, 100%);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px 16px;
+      margin-bottom: 12px;
+      padding: 10px 14px;
+      background: var(--panel);
+      border-radius: 8px;
+    }
+    header .id { font-weight: 600; color: var(--accent); }
+    header .meta { font-size: 12px; color: var(--muted); word-break: break-all; }
+    .drop {
+      width: min(720px, 100%);
+      padding: 24px;
+      border: 2px dashed #444;
+      border-radius: 8px;
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    .drop:hover, .drop.drag { border-color: var(--accent); color: var(--text); }
+    .wrap {
+      width: min(720px, 100%);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    canvas {
+      display: block;
+      background: #0d0d10;
+      border-radius: 4px;
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .controls button {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: #3a3a44;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .controls button:hover { background: #4a4a58; }
+    .controls button:disabled { opacity: 0.35; cursor: not-allowed; }
+    .step {
+      min-width: 100px;
+      text-align: center;
+      font-variant-numeric: tabular-nums;
+      font-size: 15px;
+    }
+    .speed {
+      padding: 8px 12px;
+      border-radius: 20px;
+      background: #3a3a44;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .log {
+      width: min(720px, 100%);
+      margin-top: 12px;
+    }
+    .log label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .log pre {
+      margin: 0;
+      padding: 12px;
+      background: #0d0d10;
+      border-radius: 6px;
+      min-height: 72px;
+      max-height: 160px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 12px;
+      color: #c8c8d0;
+    }
+    input[type="file"] { display: none; }
+    .err { color: #f66; margin-top: 8px; font-size: 13px; }
+    .hint { font-size: 12px; color: var(--muted); max-width: 720px; margin-top: 8px; line-height: 1.5; }
+    .status { color: var(--accent); margin-top: 10px; font-size: 14px; min-height: 1.4em; }
+    .filebtn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 18px;
+      background: #3a5a9e;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .filebtn:hover { filter: brightness(1.08); }
+  </style>
+</head>
+<body>
+  <header id="bar" style="display:none">
+    <span class="id" id="gameId">—</span>
+    <span class="meta">Session: <span id="sessionId">—</span></span>
+    <span class="meta">Score: <span id="scoreVal">—</span> · State: <span id="stateVal">—</span></span>
+  </header>
+
+  <label class="drop" id="drop" for="file">
+    Drop a <code>.recording.jsonl</code> here or click to open
+  </label>
+  <button type="button" class="filebtn" id="pickFile">Choose file…</button>
+  <p class="hint" id="fileHint">
+    If drag-and-drop does nothing, use <strong>Choose file</strong> or serve this folder over HTTP:
+    <code style="background:#2a2a32;padding:2px 6px;border-radius:4px">cd replay && python3 -m http.server 8765</code>
+    then open <code style="background:#2a2a32;padding:2px 6px;border-radius:4px">http://localhost:8765</code> — browsers often block file drops on <code>file://</code> pages.
+  </p>
+  <div class="status" id="status"></div>
+  <input type="file" id="file" accept=".jsonl,.json,text/plain,*/*" />
+  <button type="button" id="another" style="display:none;margin-bottom:8px;background:#3a3a44;border:none;color:#e8e8ed;padding:8px 14px;border-radius:6px;cursor:pointer;font-size:13px">Load another recording</button>
+
+  <div class="wrap" id="stage" style="display:none">
+    <canvas id="cv" width="512" height="512"></canvas>
+    <div class="controls">
+      <button type="button" id="btnStart" title="Start">|◀</button>
+      <button type="button" id="btnPrev" title="Previous">◀</button>
+      <button type="button" id="btnPlay" title="Play/Pause">▶</button>
+      <button type="button" id="btnNext" title="Next">▶|</button>
+      <button type="button" id="btnEnd" title="End">▶|</button>
+      <span class="step"><span id="cur">0</span> / <span id="total">0</span></span>
+      <button type="button" class="speed" id="speed" title="Speed">1x</button>
+    </div>
+  </div>
+  <div class="err" id="err"></div>
+
+  <div class="log" id="logWrap" style="display:none">
+    <label>REASONING LOG</label>
+    <pre id="reason">No reasoning log captured.</pre>
+  </div>
+
+  <script>
+    const PALETTE = {
+      0: "#FFFFFF", 1: "#CCCCCC", 2: "#999999", 3: "#666666", 4: "#333333",
+      5: "#000000", 6: "#E53AA3", 7: "#FF7BCC", 8: "#F93C31", 9: "#1E93FF",
+      10: "#88D8F1", 11: "#FFDC00", 12: "#FF851B", 13: "#921231", 14: "#4FCC30", 15: "#A356D6",
+    };
+
+    /** @type {{ grid: number[][], score: number|null, state: string, reasoning: string|null, gameId: string, guid: string }[]} */
+    let steps = [];
+    let idx = 0;
+    let playTimer = null;
+    const speeds = [1, 2, 4, 8];
+    let speedIdx = 0;
+    const baseMs = 200;
+
+    const cv = document.getElementById("cv");
+    const ctx = cv.getContext("2d");
+
+    function setStatus(msg) {
+      const el = document.getElementById("status");
+      if (el) el.textContent = msg || "";
+    }
+
+    /** Parse line-by-line so we don't freeze the tab on multi-MB files. */
+    function parseJsonlAsync(text, onDone, onError) {
+      const lines = text.split(/\n/).filter((l) => l.trim());
+      const out = [];
+      let i = 0;
+      const CHUNK = 40;
+
+      function step() {
+        try {
+          const end = Math.min(i + CHUNK, lines.length);
+          for (; i < end; i++) {
+            let row;
+            try {
+              row = JSON.parse(lines[i]);
+            } catch {
+              continue;
+            }
+            const data = row.data;
+            if (!data || !data.frame || !data.frame[0]) continue;
+            const grid = data.frame[0];
+            const ai = data.action_input || {};
+            out.push({
+              grid,
+              score: data.score ?? null,
+              state: data.state ?? "",
+              reasoning: ai.reasoning ?? null,
+              gameId: data.game_id ?? "",
+              guid: data.guid ?? "",
+            });
+          }
+          if (i < lines.length) {
+            setStatus("Parsing… " + i + " / " + lines.length + " lines");
+            setTimeout(step, 0);
+          } else {
+            onDone(out);
+          }
+        } catch (e) {
+          onError(e);
+        }
+      }
+      setStatus("Parsing " + lines.length + " lines…");
+      setTimeout(step, 0);
+    }
+
+    function draw() {
+      if (!steps.length) return;
+      const s = steps[idx];
+      const g = s.grid;
+      const h = g.length;
+      const w = g[0]?.length ?? 0;
+      const cell = Math.floor(Math.min(cv.width, cv.height) / Math.max(w, h, 1));
+      const offX = Math.floor((cv.width - w * cell) / 2);
+      const offY = Math.floor((cv.height - h * cell) / 2);
+      ctx.fillStyle = "#0d0d10";
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          const c = g[y][x] ?? 0;
+          ctx.fillStyle = PALETTE[c] ?? "#f0f";
+          ctx.fillRect(offX + x * cell, offY + y * cell, cell, cell);
+        }
+      }
+      document.getElementById("cur").textContent = String(idx + 1);
+      document.getElementById("total").textContent = String(steps.length);
+      document.getElementById("gameId").textContent = s.gameId || "—";
+      document.getElementById("sessionId").textContent = s.guid || "—";
+      document.getElementById("scoreVal").textContent = s.score !== null && s.score !== undefined ? String(s.score) : "—";
+      document.getElementById("stateVal").textContent = s.state || "—";
+      const r = s.reasoning;
+      document.getElementById("reason").textContent =
+        r && String(r).trim() ? String(r) : "No reasoning log captured.";
+      document.getElementById("btnPrev").disabled = idx <= 0;
+      document.getElementById("btnNext").disabled = idx >= steps.length - 1;
+      document.getElementById("btnStart").disabled = idx <= 0;
+      document.getElementById("btnEnd").disabled = idx >= steps.length - 1;
+    }
+
+    function stopPlay() {
+      if (playTimer) {
+        clearInterval(playTimer);
+        playTimer = null;
+      }
+      document.getElementById("btnPlay").textContent = "▶";
+    }
+
+    function tickPlay() {
+      if (idx >= steps.length - 1) {
+        stopPlay();
+        return;
+      }
+      idx++;
+      draw();
+    }
+
+    function togglePlay() {
+      if (!steps.length) return;
+      if (playTimer) {
+        stopPlay();
+        return;
+      }
+      document.getElementById("btnPlay").textContent = "❚❚";
+      const ms = baseMs / speeds[speedIdx];
+      playTimer = setInterval(tickPlay, ms);
+    }
+
+    function applySteps(parsed) {
+      document.getElementById("err").textContent = "";
+      setStatus("");
+      steps = parsed;
+      if (!steps.length) {
+        document.getElementById("err").textContent =
+          "No frames found. Expected JSON lines with data.frame[0] as a 2D grid.";
+        return;
+      }
+      idx = 0;
+      document.getElementById("bar").style.display = "flex";
+      document.getElementById("stage").style.display = "flex";
+      document.getElementById("logWrap").style.display = "block";
+      document.getElementById("drop").style.display = "none";
+      document.getElementById("another").style.display = "block";
+      const hint = document.getElementById("fileHint");
+      if (hint) hint.style.display = "none";
+      const pick = document.getElementById("pickFile");
+      if (pick) pick.style.display = "none";
+      stopPlay();
+      draw();
+    }
+
+    function loadText(text) {
+      document.getElementById("err").textContent = "";
+      parseJsonlAsync(
+        text,
+        (parsed) => applySteps(parsed),
+        (e) => {
+          setStatus("");
+          document.getElementById("err").textContent =
+            "Failed to parse file: " + (e && e.message ? e.message : String(e));
+        }
+      );
+    }
+
+    function loadFile(f) {
+      if (!f) return;
+      document.getElementById("err").textContent = "";
+      setStatus("Reading " + f.name + " (" + Math.round(f.size / 1024) + " KB)…");
+      const r = new FileReader();
+      r.onload = () => {
+        try {
+          loadText(String(r.result || ""));
+        } catch (e) {
+          setStatus("");
+          document.getElementById("err").textContent = "Error: " + (e && e.message ? e.message : String(e));
+        }
+      };
+      r.onerror = () => {
+        setStatus("");
+        document.getElementById("err").textContent =
+          "Could not read file (browser blocked or file unreadable). Try the local HTTP server from the hint above.";
+      };
+      r.readAsText(f);
+    }
+
+    document.getElementById("another").addEventListener("click", () => {
+      stopPlay();
+      steps = [];
+      document.getElementById("bar").style.display = "none";
+      document.getElementById("stage").style.display = "none";
+      document.getElementById("logWrap").style.display = "none";
+      document.getElementById("another").style.display = "none";
+      document.getElementById("drop").style.display = "block";
+      const hint = document.getElementById("fileHint");
+      if (hint) hint.style.display = "block";
+      const pick = document.getElementById("pickFile");
+      if (pick) pick.style.display = "inline-block";
+      document.getElementById("file").value = "";
+      document.getElementById("err").textContent = "";
+      setStatus("");
+    });
+
+    document.getElementById("pickFile").addEventListener("click", () => {
+      document.getElementById("file").click();
+    });
+
+    document.getElementById("file").addEventListener("change", (e) => {
+      const f = e.target.files?.[0];
+      loadFile(f);
+    });
+
+    const drop = document.getElementById("drop");
+    function onDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "copy";
+      drop.classList.add("drag");
+    }
+    drop.addEventListener("dragover", onDragOver);
+    drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+    drop.addEventListener("drop", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      drop.classList.remove("drag");
+      const f = e.dataTransfer?.files?.[0];
+      if (f) loadFile(f);
+    });
+
+    document.getElementById("btnPrev").addEventListener("click", () => {
+      stopPlay();
+      idx = Math.max(0, idx - 1);
+      draw();
+    });
+    document.getElementById("btnNext").addEventListener("click", () => {
+      stopPlay();
+      idx = Math.min(steps.length - 1, idx + 1);
+      draw();
+    });
+    document.getElementById("btnStart").addEventListener("click", () => {
+      stopPlay();
+      idx = 0;
+      draw();
+    });
+    document.getElementById("btnEnd").addEventListener("click", () => {
+      stopPlay();
+      idx = steps.length - 1;
+      draw();
+    });
+    document.getElementById("btnPlay").addEventListener("click", togglePlay);
+    document.getElementById("speed").addEventListener("click", () => {
+      speedIdx = (speedIdx + 1) % speeds.length;
+      document.getElementById("speed").textContent = speeds[speedIdx] + "x";
+      if (playTimer) {
+        stopPlay();
+        togglePlay();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (!steps.length) return;
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        document.getElementById("btnPrev").click();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        document.getElementById("btnNext").click();
+      } else if (e.key === " ") {
+        e.preventDefault();
+        togglePlay();
+      }
+    });
+  </script>
+</body>
+</html>
