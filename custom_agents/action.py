@@ -1,25 +1,33 @@
-import random
-import time
-from typing import Any
-import numpy as np
-import sys
-import os
+# 1. Standard Library
+import hashlib
 import logging
+import os
+import random
+import sys
+import time
+from collections import deque
+from typing import Any
+
+# 2. Third-Party Libraries
+import numpy as np
 import torch
 import torch.nn as nn
-import torch.optim as optim
 import torch.nn.functional as F
+import torch.optim as optim
 from torch.utils.tensorboard import SummaryWriter
-from collections import deque
-import hashlib
 
+# 3. Local Application Imports
+# Path adjustments should happen before importing local modules
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'ARC-AGI-3-Agents'))
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+sys.path.append(os.path.dirname(__file__))
+
+# 4. ARC-AGI-3-Agents Imports
 from agents.agent import Agent
 from agents.structs import FrameData, GameAction, GameState
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-sys.path.append(os.path.dirname(__file__))  # Add current directory to path
-from utils import setup_experiment_directory, setup_logging_for_experiment, get_environment_directory
+from utils import get_environment_directory, setup_experiment_directory, setup_logging_for_experiment
 from view_utils import save_action_visualization
+
 
 """
 Action Learner - Learns to predict which actions cause frame changes for efficient exploration.
@@ -115,7 +123,7 @@ class Action(Agent):
         self.MAX_ACTIONS = float('inf')
         
         # Device configuration
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device('cuda' if torch.cuda.is_available() else 'mps' if torch.backends.mps.is_available() else 'cpu')
         print(f"Action agent using device: {self.device}")
         
         # Setup experiment directory and logging

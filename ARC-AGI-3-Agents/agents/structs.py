@@ -213,6 +213,12 @@ class FrameData(BaseModel):
     full_reset: bool = False
 
     available_actions: list[GameAction] = Field(default_factory=list)
-    
+
+    @field_validator("available_actions", mode="before")
+    @classmethod
+    def _filter_unknown_actions(cls, v: list) -> list:
+        valid_ids = {a.value for a in GameAction}
+        return [x for x in v if x in valid_ids]
+
     def is_empty(self) -> bool:
         return len(self.frame) == 0

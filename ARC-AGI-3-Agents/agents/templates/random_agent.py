@@ -9,7 +9,7 @@ from ..structs import FrameData, GameAction, GameState
 class Random(Agent):
     """An agent that always selects actions at random."""
 
-    MAX_ACTIONS = 80
+    MAX_ACTIONS = 24000
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
@@ -34,13 +34,14 @@ class Random(Agent):
         self, frames: list[FrameData], latest_frame: FrameData
     ) -> GameAction:
         """Choose which action the Agent should take, fill in any arguments, and return it."""
+
         if latest_frame.state in [GameState.NOT_PLAYED, GameState.GAME_OVER]:
             # if game is not started (at init or after GAME_OVER) we need to reset
             # add a small delay before resetting after GAME_OVER to avoid timeout
             action = GameAction.RESET
         else:
             # else choose a random action that isnt reset
-            action = random.choice([a for a in GameAction if a is not GameAction.RESET])
+            action = random.choice(latest_frame.available_actions)
 
         if action.is_simple():
             action.reasoning = f"RNG told me to pick {action.value}"

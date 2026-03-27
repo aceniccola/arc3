@@ -4,7 +4,10 @@
 *.env
 !.env-example
 venv/
-
+andrew* 
+old/
+runs/
+environment_files/
 # Cache
 .ruff_cache/
 .mypy_cache/

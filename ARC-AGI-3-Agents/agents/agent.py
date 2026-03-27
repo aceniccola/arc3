@@ -80,6 +80,7 @@ class Agent(ABC):
             and self.action_counter <= self.MAX_ACTIONS
         ):
             action = self.choose_action(self.frames, self.frames[-1])
+            # print(action)
             if frame := self.take_action(action):
                 self.append_frame(frame)
                 logger.info(
